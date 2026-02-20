@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/models/question_model.dart';
 import 'package:quiz_app/screens/quiz/quiz_result_screen.dart';
+import 'package:quiz_app/screens/quiz/quiz_screen.dart';
 import 'package:quiz_app/services/quiz_service.dart';
 
 class QuestionViewScreen extends StatelessWidget {
@@ -32,7 +33,18 @@ class QuestionViewScreen extends StatelessWidget {
     if (question == null) return const SizedBox();
 
     return Scaffold(
-      appBar: AppBar(title: Text("Quiz")),
+      appBar: AppBar(
+        title: Text("Quiz"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<QuizService>().resetQuiz();
+              QuizScreen.go(context);
+            },
+            icon: Icon(Icons.close),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Align(
