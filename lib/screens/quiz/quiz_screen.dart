@@ -13,24 +13,30 @@ class QuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final quisInProgress = context.select<QuizService, bool>(
+      (p) => p.currentQuizQuestions != null,
+    );
+
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            Text(
-              "Lets review Flutter!",
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 15),
-            ElevatedButton(
-              onPressed: () {
-                context.read<QuizService>().nextQuestion();
-              },
-              child: Text("Start"),
-            ),
-          ],
-        ),
+        child: !quisInProgress
+            ? Column(
+                mainAxisSize: .min,
+                children: [
+                  Text(
+                    "Lets review Flutter!",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 15),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<QuizService>().nextQuestion();
+                    },
+                    child: Text("Start"),
+                  ),
+                ],
+              )
+            : Text("In progress"),
       ),
     );
   }
