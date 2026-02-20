@@ -4,7 +4,7 @@ import 'package:quiz_app/temp.dart';
 
 class QuizService with ChangeNotifier {
   bool showResults = false;
-  List<QuestionModel> quizQuestions = questions;
+  List<QuestionModel> quizQuestions = [...questions];
   List<QuestionModel>? currentQuizQuestion;
   List<QuestionModel> get getQuestions {
     return quizQuestions;
@@ -25,7 +25,9 @@ class QuizService with ChangeNotifier {
   }
 
   void resetQuiz() {
+    quizQuestions = questions;
     currentQuizQuestion = null;
+    showResults = false;
     notifyListeners();
   }
 
@@ -43,9 +45,9 @@ class QuizService with ChangeNotifier {
         quizQuestions.removeLast(),
       ];
       debugPrint(
-        "updateCurrentQuizQuestion: ${updateCurrentQuizQuestion.length}", // should increase
+        "updateCurrentQuizQuestion: ${updateCurrentQuizQuestion.length}",
       );
-      debugPrint("quizQuestions: ${quizQuestions.length}"); // should reduce
+      debugPrint("quizQuestions: ${quizQuestions.length}");
       _setCurrentQuizQuestions(updateCurrentQuizQuestion);
     } else {
       showResults = true;
