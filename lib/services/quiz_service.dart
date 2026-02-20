@@ -39,8 +39,6 @@ class QuizService with ChangeNotifier {
       currentQuestion = nextQuestion;
       currentQuizQuestion = updateCurrentQuizQuestion;
       notifyListeners();
-    } else {
-      notifyListeners();
     }
   }
 
