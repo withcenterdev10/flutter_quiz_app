@@ -16,7 +16,15 @@ class QuizService with ChangeNotifier {
   }
 
   void resetQuiz() {
-    quizQuestions = questions;
+    questions.shuffle();
+    final updatedQuestions = questions.map((question) {
+      final answers = question.answers;
+      answers.shuffle();
+      question.answers = answers;
+      return question;
+    }).toList();
+
+    quizQuestions = updatedQuestions;
     currentQuizQuestion = null;
     notifyListeners();
   }
@@ -27,14 +35,8 @@ class QuizService with ChangeNotifier {
 
   void nextQuestion() {
     if (quizQuestions.isNotEmpty) {
-      quizQuestions.shuffle();
-
       final nextQuestion = quizQuestions.removeLast();
       nextQuestion.selectedAnswerId = null;
-      final answers = nextQuestion.answers;
-      answers.shuffle();
-      nextQuestion.answers = answers;
-
       final updateCurrentQuizQuestion = [...?currentQuizQuestion, nextQuestion];
       currentQuestion = nextQuestion;
       currentQuizQuestion = updateCurrentQuizQuestion;
