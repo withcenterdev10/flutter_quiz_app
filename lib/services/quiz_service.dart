@@ -24,9 +24,20 @@ class QuizService with ChangeNotifier {
     notifyListeners();
   }
 
+  void resetQuiz() {
+    currentQuizQuestion = null;
+    notifyListeners();
+  }
+
   void nextQuestion() {
     if (quizQuestions.isNotEmpty) {
       quizQuestions.shuffle();
+
+      quizQuestions.map((question) {
+        question.answers.shuffle();
+        return question;
+      });
+
       final updateCurrentQuizQuestion = [
         ...?currentQuizQuestion,
         quizQuestions.removeLast(),

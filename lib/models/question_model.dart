@@ -11,7 +11,7 @@ class QuestionModel {
 
   final String question;
   final int id;
-  final List<AnswerModel> answers;
+  List<AnswerModel> answers;
   final int correctAnswerId;
   int? selectedAnswerId;
 

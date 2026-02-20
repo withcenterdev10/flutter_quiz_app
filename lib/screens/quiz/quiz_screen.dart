@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/models/question_model.dart';
 import 'package:quiz_app/screens/questions/question_view_screen.dart';
+import 'package:quiz_app/screens/quiz/quiz_result_screen.dart';
 import 'package:quiz_app/services/quiz_service.dart';
 
 class QuizScreen extends StatelessWidget {
@@ -47,7 +48,7 @@ class QuizScreen extends StatelessWidget {
                 ],
               )
             : showResults
-            ? Text("yey")
+            ? QuizResultScreen()
             : QuestionViewScreen(
                 questionCount: questionCount,
                 questionId: currentQuestions!.last.id,

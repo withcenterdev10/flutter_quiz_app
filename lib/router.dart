@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:quiz_app/screens/questions/question_create_screen.dart';
 import 'package:quiz_app/screens/questions/questions_view_screen.dart';
 import 'package:quiz_app/screens/quiz/quiz_screen.dart';
+import 'package:quiz_app/screens/quiz/quiz_result_screen.dart';
 
 final router = GoRouter(
   initialLocation: QuizScreen.routeName,
@@ -18,6 +19,10 @@ final router = GoRouter(
     GoRoute(
       path: QuizScreen.routeName,
       builder: (BuildContext context, state) => QuizScreen(),
+    ),
+    GoRoute(
+      path: QuizResultScreen.routeName,
+      builder: (BuildContext context, state) => QuizResultScreen(),
     ),
   ],
 );
