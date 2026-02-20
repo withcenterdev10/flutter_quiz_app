@@ -32,7 +32,20 @@ class _QuestionViewScreen extends State<QuestionViewScreen> {
           : service.currentQuizQuestions!.length,
     );
 
+    final userSelectedAnAnswer = context.select<QuizService, bool>((service) {
+      if (service.currentQuestion != null &&
+          service.currentQuestion!.selectedAnswerId != null) {
+        debugPrint("${service.currentQuestion!.selectedAnswerId}");
+
+        return true;
+      } else {
+        return false;
+      }
+    });
+
     if (question == null) return const SizedBox();
+
+    debugPrint("userSelectedAnAnswer: $userSelectedAnAnswer");
 
     return Scaffold(
       appBar: AppBar(title: Text("Quiz")),
@@ -64,20 +77,20 @@ class _QuestionViewScreen extends State<QuestionViewScreen> {
                 ),
                 const SizedBox(height: 15),
 
-                // if (question.selectedAnswerId != null)
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      if (questionCount == 10) {
-                        QuizResultScreen.go(context);
-                      } else {
-                        context.read<QuizService>().nextQuestion();
-                      }
-                    },
-                    child: Text("Next"),
+                if (userSelectedAnAnswer)
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        if (questionCount == 10) {
+                          QuizResultScreen.go(context);
+                        } else {
+                          context.read<QuizService>().nextQuestion();
+                        }
+                      },
+                      child: Text("Next"),
+                    ),
                   ),
-                ),
               ],
             ),
           ),

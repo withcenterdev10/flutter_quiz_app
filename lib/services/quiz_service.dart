@@ -29,7 +29,8 @@ class QuizService with ChangeNotifier {
     if (quizQuestions.isNotEmpty) {
       quizQuestions.shuffle();
 
-      final nextQuestion = quizQuestions.last;
+      final nextQuestion = quizQuestions.removeLast();
+      nextQuestion.selectedAnswerId = null;
       final answers = nextQuestion.answers;
       answers.shuffle();
       nextQuestion.answers = answers;
