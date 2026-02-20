@@ -5,14 +5,7 @@ import 'package:quiz_app/models/question_model.dart';
 import 'package:quiz_app/services/quiz_service.dart';
 
 class QuestionViewScreen extends StatefulWidget {
-  const QuestionViewScreen({
-    super.key,
-    required this.questionId,
-    required this.questionCount,
-  });
-
-  final int? questionId;
-  final int questionCount;
+  const QuestionViewScreen({super.key});
 
   static const routeName = '/question_view_screen';
   static Function(BuildContext context) go = (context) => context.go(routeName);
@@ -30,9 +23,12 @@ class _QuestionViewScreen extends State<QuestionViewScreen> {
   @override
   Widget build(BuildContext context) {
     final question = context.select<QuizService, QuestionModel?>(
-      (service) => service.currentQuizQuestions?.firstWhere(
-        (q) => q.id == widget.questionId,
-      ),
+      (service) => service.currentQuestion,
+    );
+    final questionCount = context.select<QuizService, int>(
+      (service) => service.currentQuizQuestions == null
+          ? 0
+          : service.currentQuizQuestions!.length,
     );
 
     if (question == null) return const SizedBox();
@@ -49,7 +45,7 @@ class _QuestionViewScreen extends State<QuestionViewScreen> {
               mainAxisSize: .min,
               children: [
                 const SizedBox(height: 20),
-                Text("${widget.questionCount}.) ${question.question}"),
+                Text("$questionCount.) ${question.question}"),
                 const SizedBox(height: 20),
                 ...question.answers.map(
                   (answer) => SizedBox(

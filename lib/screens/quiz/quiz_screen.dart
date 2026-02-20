@@ -30,30 +30,49 @@ class QuizScreen extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-        child: !quisInProgress
-            ? Column(
-                mainAxisSize: .min,
-                children: [
-                  Text(
-                    "Lets review Flutter!",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 15),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<QuizService>().nextQuestion();
-                    },
-                    child: Text("Start"),
-                  ),
-                ],
-              )
-            : showResults
-            ? QuizResultScreen()
-            : QuestionViewScreen(
-                questionCount: questionCount,
-                questionId: currentQuestions!.last.id,
-              ),
+        child: Column(
+          mainAxisSize: .min,
+          children: [
+            Text(
+              "Lets review Flutter!",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 15),
+            ElevatedButton(
+              onPressed: () {
+                context.read<QuizService>().nextQuestion();
+                QuestionViewScreen.go(context);
+              },
+              child: Text("Start"),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+
+//  !quisInProgress
+//             ? Column(
+//                 mainAxisSize: .min,
+//                 children: [
+//                   Text(
+//                     "Lets review Flutter!",
+//                     style: Theme.of(context).textTheme.titleLarge,
+//                   ),
+//                   const SizedBox(height: 15),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       context.read<QuizService>().nextQuestion();
+//                     },
+//                     child: Text("Start"),
+//                   ),
+//                 ],
+//               )
+//             : showResults
+//             ? QuizResultScreen()
+//             : QuestionViewScreen(
+//                 questionCount: questionCount,
+//                 questionId: currentQuestions!.last.id,
+//               ),

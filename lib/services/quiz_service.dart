@@ -6,22 +6,14 @@ class QuizService with ChangeNotifier {
   bool showResults = false;
   List<QuestionModel> quizQuestions = [...questions];
   List<QuestionModel>? currentQuizQuestion;
-  List<QuestionModel> get getQuestions {
-    return quizQuestions;
+  QuestionModel? currentQuestion;
+
+  QuestionModel? get getCurrentQuestion {
+    return currentQuestion;
   }
 
   List<QuestionModel>? get currentQuizQuestions {
     return currentQuizQuestion;
-  }
-
-  void _setQuizQuestions(List<QuestionModel> newQuestion) {
-    quizQuestions = newQuestion;
-    notifyListeners();
-  }
-
-  void _setCurrentQuizQuestions(List<QuestionModel> newQuestion) {
-    currentQuizQuestion = newQuestion;
-    notifyListeners();
   }
 
   void resetQuiz() {
@@ -35,22 +27,15 @@ class QuizService with ChangeNotifier {
     if (quizQuestions.isNotEmpty) {
       quizQuestions.shuffle();
 
-      quizQuestions = quizQuestions.map((question) {
-        final answers = question.answers;
-        answers.shuffle();
-        question.answers = answers;
-        return question;
-      }).toList();
+      final nextQuestion = quizQuestions.last;
+      final answers = nextQuestion.answers;
+      answers.shuffle();
+      nextQuestion.answers = answers;
 
-      final updateCurrentQuizQuestion = [
-        ...?currentQuizQuestion,
-        quizQuestions.removeLast(),
-      ];
-      debugPrint(
-        "updateCurrentQuizQuestion: ${updateCurrentQuizQuestion.length}",
-      );
-      debugPrint("quizQuestions: ${quizQuestions.length}");
-      _setCurrentQuizQuestions(updateCurrentQuizQuestion);
+      final updateCurrentQuizQuestion = [...?currentQuizQuestion, nextQuestion];
+      currentQuestion = nextQuestion;
+      currentQuizQuestion = updateCurrentQuizQuestion;
+      notifyListeners();
     } else {
       showResults = true;
       notifyListeners();
@@ -67,6 +52,7 @@ class QuizService with ChangeNotifier {
       }
     }).toList();
 
-    _setCurrentQuizQuestions(updatedQuizCurrentQuestions);
+    currentQuizQuestion = updatedQuizCurrentQuestions;
+    notifyListeners();
   }
 }
