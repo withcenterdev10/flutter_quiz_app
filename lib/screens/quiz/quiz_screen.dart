@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_app/models/question_model.dart';
+import 'package:quiz_app/screens/questions/question_view_screen.dart';
 import 'package:quiz_app/services/quiz_service.dart';
 
 class QuizScreen extends StatelessWidget {
@@ -13,9 +15,17 @@ class QuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("Rebuilding");
     final quisInProgress = context.select<QuizService, bool>(
       (p) => p.currentQuizQuestions != null,
     );
+    final currentQuestions = context.select<QuizService, List<QuestionModel>?>(
+      (p) => p.currentQuizQuestions,
+    );
+    final questionCount = currentQuestions != null
+        ? currentQuestions.length
+        : 0;
+    final showResults = context.select<QuizService, bool>((p) => p.showResults);
 
     return Scaffold(
       body: Center(
@@ -36,8 +46,15 @@ class QuizScreen extends StatelessWidget {
                   ),
                 ],
               )
-            : Text("In progress"),
+            : showResults
+            ? Text("yey")
+            : QuestionViewScreen(
+                questionCount: questionCount,
+                questionId: currentQuestions!.last.id,
+              ),
       ),
     );
   }
 }
+
+class QuizModel {}

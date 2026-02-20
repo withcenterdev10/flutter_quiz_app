@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quiz_app/temp.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_app/models/question_model.dart';
+import 'package:quiz_app/services/quiz_service.dart';
 
 class QuestionViewScreen extends StatefulWidget {
-  const QuestionViewScreen({super.key});
+  const QuestionViewScreen({
+    super.key,
+    required this.questionId,
+    required this.questionCount,
+  });
+
+  final int? questionId;
+  final int questionCount;
 
   static const routeName = '/question_view_screen';
   static Function(BuildContext context) go = (context) => context.go(routeName);
@@ -20,37 +29,57 @@ class _QuestionViewScreen extends State<QuestionViewScreen> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final question = context.select<QuizService, QuestionModel?>(
+      (service) => service.currentQuizQuestions?.firstWhere(
+        (q) => q.id == widget.questionId,
+      ),
+    );
+
+    if (question == null) return const SizedBox();
+
     return Scaffold(
-      appBar: AppBar(title: Text("View Questions")),
+      appBar: AppBar(title: Text("Quiz")),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: ListView(
-          children: [
-            ...questions.map((q) {
-              return Padding(
-                padding: EdgeInsetsGeometry.only(bottom: 15),
-                child: SizedBox(
-                  child: Column(
-                    crossAxisAlignment: .start,
-                    mainAxisSize: .min,
-                    children: [
-                      Text("${q.question}"),
-                      const SizedBox(height: 10),
-                      ...q.answers.map(
-                        (answer) => SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: Text("${answer.answer}"),
-                          ),
-                        ),
-                      ),
-                    ],
+        child: Align(
+          alignment: AlignmentGeometry.topCenter,
+          child: SizedBox(
+            child: Column(
+              crossAxisAlignment: .start,
+              mainAxisSize: .min,
+              children: [
+                const SizedBox(height: 20),
+                Text("${widget.questionCount}.) ${question.question}"),
+                const SizedBox(height: 20),
+                ...question.answers.map(
+                  (answer) => SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.read<QuizService>().selectAnswer(
+                          question.id,
+                          answer.id,
+                        );
+                      },
+                      child: Text(answer.answer),
+                    ),
                   ),
                 ),
-              );
-            }),
-          ],
+                const SizedBox(height: 15),
+
+                // if (question.selectedAnswerId != null)
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      context.read<QuizService>().nextQuestion();
+                    },
+                    child: Text("Next"),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

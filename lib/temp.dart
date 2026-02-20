@@ -4,6 +4,7 @@ import 'package:quiz_app/models/question_model.dart';
 final questions = [
   QuestionModel(
     id: 1,
+    selectedAnswerId: null,
     question: "What is the main function entry point of every Flutter app?",
     answers: [
       AnswerModel(id: 1, answer: "runApp()"),
@@ -15,6 +16,7 @@ final questions = [
   ),
   QuestionModel(
     id: 2,
+    selectedAnswerId: null,
     question:
         "Which widget should you use when the UI depends on mutable state?",
     answers: [
@@ -27,6 +29,7 @@ final questions = [
   ),
   QuestionModel(
     id: 3,
+    selectedAnswerId: null,
     question:
         "Which widget is best for adding empty space with a fixed height or width?",
     answers: [
@@ -39,6 +42,7 @@ final questions = [
   ),
   QuestionModel(
     id: 4,
+    selectedAnswerId: null,
     question: "What method is used to trigger a rebuild in a StatefulWidget?",
     answers: [
       AnswerModel(id: 13, answer: "rebuild()"),
@@ -50,6 +54,7 @@ final questions = [
   ),
   QuestionModel(
     id: 5,
+    selectedAnswerId: null,
     question:
         "Which widget is commonly used to display a scrollable list of items?",
     answers: [
@@ -62,6 +67,7 @@ final questions = [
   ),
   QuestionModel(
     id: 6,
+    selectedAnswerId: null,
     question: "Which widget allows you to place widgets on top of each other?",
     answers: [
       AnswerModel(id: 21, answer: "Column"),
@@ -73,6 +79,7 @@ final questions = [
   ),
   QuestionModel(
     id: 7,
+    selectedAnswerId: null,
     question:
         "Which widget is typically used to create the basic visual layout structure for a Material Design screen?",
     answers: [
@@ -85,6 +92,7 @@ final questions = [
   ),
   QuestionModel(
     id: 8,
+    selectedAnswerId: null,
     question: "What does the build() method return in a widget?",
     answers: [
       AnswerModel(id: 29, answer: "A Future"),
@@ -96,6 +104,7 @@ final questions = [
   ),
   QuestionModel(
     id: 9,
+    selectedAnswerId: null,
     question:
         "Which widget expands to fill the remaining available space in a Row or Column?",
     answers: [
@@ -108,6 +117,7 @@ final questions = [
   ),
   QuestionModel(
     id: 10,
+    selectedAnswerId: null,
     question: "Which command is used to run a Flutter app in debug mode?",
     answers: [
       AnswerModel(id: 37, answer: "flutter start"),

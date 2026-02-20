@@ -3,9 +3,9 @@ import 'package:quiz_app/models/question_model.dart';
 import 'package:quiz_app/temp.dart';
 
 class QuizService with ChangeNotifier {
+  bool showResults = false;
   List<QuestionModel> quizQuestions = questions;
   List<QuestionModel>? currentQuizQuestion;
-
   List<QuestionModel> get getQuestions {
     return quizQuestions;
   }
@@ -25,15 +25,33 @@ class QuizService with ChangeNotifier {
   }
 
   void nextQuestion() {
-    quizQuestions.shuffle();
-    final updateCurrentQuizQuestion = [
-      ...?currentQuizQuestion,
-      quizQuestions.removeLast(),
-    ];
-    debugPrint(
-      "updateCurrentQuizQuestion: ${updateCurrentQuizQuestion.length}", // should increase
-    );
-    debugPrint("quizQuestions: ${quizQuestions.length}"); // should reduce
-    _setCurrentQuizQuestions(updateCurrentQuizQuestion);
+    if (quizQuestions.isNotEmpty) {
+      quizQuestions.shuffle();
+      final updateCurrentQuizQuestion = [
+        ...?currentQuizQuestion,
+        quizQuestions.removeLast(),
+      ];
+      debugPrint(
+        "updateCurrentQuizQuestion: ${updateCurrentQuizQuestion.length}", // should increase
+      );
+      debugPrint("quizQuestions: ${quizQuestions.length}"); // should reduce
+      _setCurrentQuizQuestions(updateCurrentQuizQuestion);
+    } else {
+      showResults = true;
+      notifyListeners();
+    }
+  }
+
+  void selectAnswer(int questionId, int answerId) {
+    final updatedQuizCurrentQuestions = currentQuizQuestions!.map((question) {
+      if (question.id == questionId) {
+        question.selectedAnswerId = answerId;
+        return question;
+      } else {
+        return question;
+      }
+    }).toList();
+
+    _setCurrentQuizQuestions(updatedQuizCurrentQuestions);
   }
 }
