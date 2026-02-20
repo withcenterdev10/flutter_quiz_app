@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 // import 'package:flutter_profile/services/auth/auth_service.dart';
 // import 'package:flutter_profile/screens/auth/sign_up_screen.dart';
 // import 'package:flutter_profile/screens/home/home_screen.dart';
@@ -10,10 +11,10 @@ import 'package:quiz_app/widgets/unfocus_close_keyboard.dart';
 class QuestionCreateScreen extends StatefulWidget {
   const QuestionCreateScreen({super.key});
 
-  // static const routeName = '/sign_in';
-  // static Function(BuildContext context) go = (context) => context.go(routeName);
-  // static Function(BuildContext context) push = (context) =>
-  //     context.push(routeName);
+  static const routeName = '/question_create';
+  static Function(BuildContext context) go = (context) => context.go(routeName);
+  static Function(BuildContext context) push = (context) =>
+      context.push(routeName);
 
   @override
   State<StatefulWidget> createState() {
