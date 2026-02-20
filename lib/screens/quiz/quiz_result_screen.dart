@@ -47,15 +47,17 @@ class QuizResultScreen extends StatelessWidget {
             const SizedBox(height: 30),
             Text("Questions:", style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 30),
-            ...currentQuestions!.map((q) {
+            ...currentQuestions!.asMap().entries.map((entry) {
+              final index = entry.key + 1;
+              final q = entry.value;
               return Padding(
-                padding: EdgeInsetsGeometry.only(bottom: 15),
+                padding: EdgeInsetsGeometry.only(bottom: 30),
                 child: SizedBox(
                   child: Column(
                     crossAxisAlignment: .start,
                     mainAxisSize: .min,
                     children: [
-                      Text(q.question),
+                      Text("$index.) ${q.question}"),
                       const SizedBox(height: 10),
                       ...q.answers.map(
                         (answer) => SizedBox(
@@ -74,12 +76,20 @@ class QuizResultScreen extends StatelessWidget {
                                     backgroundColor: Colors.redAccent,
                                     foregroundColor: Colors.white,
                                   )
+                                : q.selectedAnswerId != q.correctAnswerId &&
+                                      answer.id == q.correctAnswerId
+                                ? ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green,
+                                    foregroundColor: Colors.white,
+                                  )
                                 : null,
                             onPressed: () {},
                             child: Text(answer.answer),
                           ),
                         ),
                       ),
+                      const SizedBox(height: 30),
+                      const Divider(),
                     ],
                   ),
                 ),
@@ -91,5 +101,3 @@ class QuizResultScreen extends StatelessWidget {
     );
   }
 }
-
-class QuizModel {}
