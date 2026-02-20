@@ -35,10 +35,12 @@ class QuizService with ChangeNotifier {
     if (quizQuestions.isNotEmpty) {
       quizQuestions.shuffle();
 
-      quizQuestions.map((question) {
-        question.answers.shuffle();
+      quizQuestions = quizQuestions.map((question) {
+        final answers = question.answers;
+        answers.shuffle();
+        question.answers = answers;
         return question;
-      });
+      }).toList();
 
       final updateCurrentQuizQuestion = [
         ...?currentQuizQuestion,
