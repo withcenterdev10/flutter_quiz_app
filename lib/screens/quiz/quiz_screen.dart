@@ -57,5 +57,3 @@ class QuizScreen extends StatelessWidget {
     );
   }
 }
-
-class QuizModel {}
