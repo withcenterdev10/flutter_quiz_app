@@ -28,8 +28,13 @@ class _QuestionViewScreen extends State<QuestionViewScreen> {
     );
     final questionCount = context.select<QuizService, int>(
       (service) => service.currentQuizQuestions == null
-          ? 0
+          ? 1
           : service.currentQuizQuestions!.length,
+    );
+    final userSelectedAnAnswer = context.select<QuizService, bool>(
+      (service) =>
+          service.currentQuestion != null &&
+          service.currentQuestion!.selectedAnswerId != null,
     );
 
     final userSelectedAnAnswer = context.select<QuizService, bool>((service) {
