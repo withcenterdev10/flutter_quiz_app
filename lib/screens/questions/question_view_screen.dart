@@ -5,7 +5,7 @@ import 'package:quiz_app/models/question_model.dart';
 import 'package:quiz_app/screens/quiz/quiz_result_screen.dart';
 import 'package:quiz_app/services/quiz_service.dart';
 
-class QuestionViewScreen extends StatefulWidget {
+class QuestionViewScreen extends StatelessWidget {
   const QuestionViewScreen({super.key});
 
   static const routeName = '/question_view_screen';
@@ -13,14 +13,6 @@ class QuestionViewScreen extends StatefulWidget {
   static Function(BuildContext context) push = (context) =>
       context.push(routeName);
 
-  @override
-  State<StatefulWidget> createState() {
-    return _QuestionViewScreen();
-  }
-}
-
-class _QuestionViewScreen extends State<QuestionViewScreen> {
-  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final question = context.select<QuizService, QuestionModel?>(
@@ -38,8 +30,6 @@ class _QuestionViewScreen extends State<QuestionViewScreen> {
     );
 
     if (question == null) return const SizedBox();
-
-    debugPrint("userSelectedAnAnswer: $userSelectedAnAnswer");
 
     return Scaffold(
       appBar: AppBar(title: Text("Quiz")),
