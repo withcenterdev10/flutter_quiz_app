@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/screens/questions/question_view_screen.dart';
+import 'package:quiz_app/screens/questions/questions_view_screen.dart';
 import 'package:quiz_app/services/quiz_service.dart';
 
 class QuizScreen extends StatelessWidget {
@@ -30,6 +31,14 @@ class QuizScreen extends StatelessWidget {
                 QuestionViewScreen.go(context);
               },
               child: Text("Start"),
+            ),
+
+            const SizedBox(height: 15),
+            ElevatedButton(
+              onPressed: () {
+                QuestionsViewScreen.push(context);
+              },
+              child: Text("View questions"),
             ),
           ],
         ),
