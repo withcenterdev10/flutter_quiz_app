@@ -5,8 +5,8 @@ import 'package:quiz_app/services/quiz_service.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => QuizService())],
+    ChangeNotifierProvider(
+      create: (_) => QuizService(),
       child: const MainApp(),
     ),
   );
