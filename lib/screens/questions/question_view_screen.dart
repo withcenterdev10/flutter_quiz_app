@@ -37,17 +37,6 @@ class _QuestionViewScreen extends State<QuestionViewScreen> {
           service.currentQuestion!.selectedAnswerId != null,
     );
 
-    final userSelectedAnAnswer = context.select<QuizService, bool>((service) {
-      if (service.currentQuestion != null &&
-          service.currentQuestion!.selectedAnswerId != null) {
-        debugPrint("${service.currentQuestion!.selectedAnswerId}");
-
-        return true;
-      } else {
-        return false;
-      }
-    });
-
     if (question == null) return const SizedBox();
 
     debugPrint("userSelectedAnAnswer: $userSelectedAnAnswer");
