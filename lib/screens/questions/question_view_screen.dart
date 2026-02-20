@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/models/question_model.dart';
+import 'package:quiz_app/screens/quiz/quiz_result_screen.dart';
 import 'package:quiz_app/services/quiz_service.dart';
 
 class QuestionViewScreen extends StatefulWidget {
@@ -68,7 +69,11 @@ class _QuestionViewScreen extends State<QuestionViewScreen> {
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () {
-                      context.read<QuizService>().nextQuestion();
+                      if (questionCount == 10) {
+                        QuizResultScreen.go(context);
+                      } else {
+                        context.read<QuizService>().nextQuestion();
+                      }
                     },
                     child: Text("Next"),
                   ),

@@ -3,7 +3,6 @@ import 'package:quiz_app/models/question_model.dart';
 import 'package:quiz_app/temp.dart';
 
 class QuizService with ChangeNotifier {
-  bool showResults = false;
   List<QuestionModel> quizQuestions = [...questions];
   List<QuestionModel>? currentQuizQuestion;
   QuestionModel? currentQuestion;
@@ -19,7 +18,10 @@ class QuizService with ChangeNotifier {
   void resetQuiz() {
     quizQuestions = questions;
     currentQuizQuestion = null;
-    showResults = false;
+    notifyListeners();
+  }
+
+  void showResult() {
     notifyListeners();
   }
 
@@ -37,7 +39,6 @@ class QuizService with ChangeNotifier {
       currentQuizQuestion = updateCurrentQuizQuestion;
       notifyListeners();
     } else {
-      showResults = true;
       notifyListeners();
     }
   }

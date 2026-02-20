@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/models/question_model.dart';
+import 'package:quiz_app/screens/questions/question_view_screen.dart';
 import 'package:quiz_app/services/quiz_service.dart';
 
 class QuizResultScreen extends StatelessWidget {
@@ -17,13 +18,18 @@ class QuizResultScreen extends StatelessWidget {
     final currentQuestions = context.select<QuizService, List<QuestionModel>?>(
       (p) => p.currentQuizQuestions,
     );
-    final totalCorrectAnswers = context.select<QuizService, int>(
-      (p) => p.currentQuizQuestions!
-          .where(
-            (question) => question.correctAnswerId == question.selectedAnswerId,
-          )
-          .length,
-    );
+    final totalCorrectAnswers = context.select<QuizService, int>((p) {
+      if (p.currentQuizQuestions != null) {
+        return p.currentQuizQuestions!
+            .where(
+              (question) =>
+                  question.correctAnswerId == question.selectedAnswerId,
+            )
+            .length;
+      } else {
+        return 0;
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(title: Text("Results")),
@@ -40,6 +46,8 @@ class QuizResultScreen extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () {
                 context.read<QuizService>().resetQuiz();
+                context.read<QuizService>().nextQuestion();
+                QuestionViewScreen.go(context);
               },
               icon: Icon(Icons.replay),
               label: Text("Replay"),
